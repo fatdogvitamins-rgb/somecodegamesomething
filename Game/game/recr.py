@@ -19,8 +19,8 @@ class MyGame:
 
         try:
             response = requests.post(url, json=data, timeout=5)
-        except requests.RequestException as error:
-            print(f"Could not reach the server: {error}")
+        except requests.RequestException:
+            print("Could not reach the score server. Start it with: python run.py server")
             return False
 
         if response.status_code == 200:
