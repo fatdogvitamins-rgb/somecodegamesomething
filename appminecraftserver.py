@@ -85,8 +85,11 @@ def game_page():
     return render_template("game.html", username=session["username"])
 
 
-@app.route("/score", methods=["POST"])
+@app.route("/score", methods=["GET", "POST"])
 def receive_score():
+    if request.method == "GET":
+        return jsonify({"message": "Use POST to send scores here."})
+
     data = request.get_json(silent=True) or {}
     name = data.get("name")
     score = data.get("score")

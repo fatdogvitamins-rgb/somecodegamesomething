@@ -15,7 +15,7 @@ class ServerTests(unittest.TestCase):
         response = self.client.get("/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json(), {"message": "Welcome to the Minecraft Server!"})
+        self.assertIn(b"Home Wi-Fi Dodge", response.data)
 
     def test_score_endpoint_accepts_score(self):
         response = self.client.post("/score", json={"name": "Recruited Game", "score": 10})
@@ -24,6 +24,15 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(
             response.get_json(),
             {"message": "Score received!", "name": "Recruited Game", "score": 10},
+        )
+
+    def test_score_page_explains_post_only_in_browser(self):
+        response = self.client.get("/score")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.get_json(),
+            {"message": "Use POST to send scores here."},
         )
 
 

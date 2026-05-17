@@ -10,6 +10,8 @@ def main():
 
     if mode == "server":
         run_server()
+    elif mode == "web":
+        run_server()
     elif mode == "score":
         run_score_game()
     elif mode == "cube":
@@ -21,6 +23,7 @@ def main():
     else:
         print("Pick one of these:")
         print("python run.py server")
+        print("python run.py web")
         print("python run.py score")
         print("python run.py cube")
         print("python run.py all")
