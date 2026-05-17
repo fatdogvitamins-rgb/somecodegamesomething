@@ -43,3 +43,10 @@ class DodgeArena:
         if len(alive) == 1:
             return alive[0]
         return None
+
+    def finish_round_if_needed(self):
+        winner = self.get_winner()
+        if not winner:
+            return None
+        self.round_active = False
+        return {"winner": winner, "coins": self.reward_coins}

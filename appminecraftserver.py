@@ -1,12 +1,16 @@
 import os
 
 from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+from flask_socketio import SocketIO, emit
 
+from arena import DodgeArena
 from storage import AccountStore
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("APP_SECRET_KEY", "dev-secret")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 store = AccountStore(os.environ.get("APP_DB_PATH", "players.db"))
+arena = DodgeArena(width=480, height=320, reward_coins=25)
 store.initialize()
 
 
@@ -93,8 +97,40 @@ def receive_score():
     return jsonify({"message": "Score received!", "name": name, "score": score})
 
 
+@socketio.on("join_game")
+def handle_join_game(data):
+    username = session.get("username")
+    if not username:
+        return
+    arena.add_player(username)
+    if len(arena.players) >= 2 and not arena.round_active:
+        arena.start_round()
+    emit(
+        "state_update",
+        {"players": arena.players, "hazards": arena.hazards, "round_active": arena.round_active},
+        broadcast=True,
+    )
+
+
+@socketio.on("move")
+def handle_move(data):
+    username = session.get("username")
+    if not username:
+        return
+    arena.move_player(username, data.get("dx", 0), data.get("dy", 0))
+    result = arena.finish_round_if_needed()
+    if result:
+        store.add_win_reward(result["winner"], result["coins"])
+        emit("round_over", result, broadcast=True)
+    emit(
+        "state_update",
+        {"players": arena.players, "hazards": arena.hazards, "round_active": arena.round_active},
+        broadcast=True,
+    )
+
+
 def run_server():
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
 
 
 if __name__ == "__main__":
