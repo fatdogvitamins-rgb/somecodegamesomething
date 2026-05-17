@@ -67,6 +67,20 @@ def login():
     return redirect(url_for("home"))
 
 
+@app.route("/lobby")
+def lobby_page():
+    if "username" not in session:
+        return redirect(url_for("home"))
+    return render_template("lobby.html", username=session["username"])
+
+
+@app.route("/game")
+def game_page():
+    if "username" not in session:
+        return redirect(url_for("home"))
+    return render_template("game.html", username=session["username"])
+
+
 @app.route("/score", methods=["POST"])
 def receive_score():
     data = request.get_json(silent=True) or {}

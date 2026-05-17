@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lobby</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <h1>Waiting for players</h1>
+      <p>{{ username }}, stay here until the round starts.</p>
+      <a class="button" href="{{ url_for('game_page') }}">Enter Arena</a>
+    </section>
+  </main>
+</body>
+</html>

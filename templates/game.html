@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dodge Arena</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <section class="card arena-card">
+      <h1>Dodge Arena</h1>
+      <p id="status">Move and survive.</p>
+      <canvas id="arena" width="480" height="320"></canvas>
+    </section>
+    <script>
+      window.GAME_USERNAME = "{{ username }}";
+    </script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+  </main>
+</body>
+</html>

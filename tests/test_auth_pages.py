@@ -25,6 +25,15 @@ class AuthPageTests(unittest.TestCase):
         self.assertIn(b"Welcome, alex", response.data)
         self.assertIn(b"Coins: 0", response.data)
 
+    def test_logged_in_player_can_open_lobby_page(self):
+        with self.client.session_transaction() as session_data:
+            session_data["username"] = "alex"
+
+        response = self.client.get("/lobby")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Waiting for players", response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
