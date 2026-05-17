@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Home Wi-Fi Dodge</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <h1>Home Wi-Fi Dodge</h1>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if profile %}
+    <section class="card">
+      <h2>Welcome, {{ profile.username }}</h2>
+      <p>Coins: {{ profile.coins }}</p>
+      <p>Wins: {{ profile.wins }}</p>
+      <a class="button" href="/lobby">Join Match</a>
+    </section>
+    {% else %}
+    <section class="grid">
+      <form class="card" method="post" action="/signup">
+        <h2>Sign Up</h2>
+        <input name="username" placeholder="Username" required>
+        <input name="password" placeholder="Password" type="password" required>
+        <button type="submit">Create Account</button>
+      </form>
+      <form class="card" method="post" action="/login">
+        <h2>Log In</h2>
+        <input name="username" placeholder="Username" required>
+        <input name="password" placeholder="Password" type="password" required>
+        <button type="submit">Log In</button>
+      </form>
+    </section>
+    {% endif %}
+
+    <section class="card">
+      <h2>Leaderboard</h2>
+      <ol>
+        {% for player in leaderboard %}
+        <li>{{ player.username }} - {{ player.wins }} wins - {{ player.coins }} coins</li>
+        {% else %}
+        <li>No players yet.</li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
