@@ -99,6 +99,11 @@ def receive_score():
 
     return jsonify({"message": "Score received!", "name": name, "score": score})
 
+@app.route("/logout")
+def logout():
+    session.pop("username", None)
+    return redirect(url_for("home"))
+
 
 @socketio.on("join_game")
 def handle_join_game(data):
