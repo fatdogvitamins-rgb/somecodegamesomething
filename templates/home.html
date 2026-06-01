@@ -11,36 +11,36 @@
     <p class="tip">Open this server from another device on your Wi-Fi with your computer's local IP address.</p>
 
     {% if error %}
-    <p class="error">{{ error }}</p>
+      <p class="error">{{ error }}</p>
     {% endif %}
 
     {% if profile %}
-    <section class="card">
-      <h2>Welcome, {{ profile.username }}</h2>
-      <p>Coins: {{ profile.coins }}</p>
-      <p>Wins: {{ profile.wins }}</p>
+      <section class="card">
+        <h2>Welcome, {{ profile.username }}</h2>
+        <p>Coins: {{ profile.coins }}</p>
+        <p>Wins: {{ profile.wins }}</p>
 
-      <div style="display:flex; gap:1rem; margin-top:1rem;">
-        <a class="button" href="/lobby">Join Match</a>
-        <a class="button danger" href="/logout">Log Out</a>
-      </div>
-    </section>
+        <div style="display:flex; gap:1rem; margin-top:1rem;">
+          <a class="button" href="/lobby">Join Match</a>
+          <a class="button danger" href="/logout">Log Out</a>
+        </div>
+      </section>
     {% else %}
-    <section class="grid">
-      <form class="card" method="post" action="/signup">
-        <h2>Sign Up</h2>
-        <input name="username" placeholder="Username" required>
-        <input name="password" placeholder="Password" type="password" required>
-        <button type="submit">Create Account</button>
-      </form>
+      <section class="grid">
+        <form class="card" method="post" action="/signup">
+          <h2>Sign Up</h2>
+          <input name="username" placeholder="Username" required>
+          <input name="password" placeholder="Password" type="password" required>
+          <button type="submit">Create Account</button>
+        </form>
 
-      <form class="card" method="post" action="/login">
-        <h2>Log In</h2>
-        <input name="username" placeholder="Username" required>
-        <input name="password" placeholder="Password" type="password" required>
-        <button type="submit">Log In</button>
-      </form>
-    </section>
+        <form class="card" method="post" action="/login">
+          <h2>Log In</h2>
+          <input name="username" placeholder="Username" required>
+          <input name="password" placeholder="Password" type="password" required>
+          <button type="submit">Log In</button>
+        </form>
+      </section>
     {% endif %}
 
     <section class="card">
@@ -59,5 +59,3 @@
   </main>
 </body>
 </html>
-
-
