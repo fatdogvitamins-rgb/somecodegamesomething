@@ -9,6 +9,7 @@
   <main class="page">
     <h1>Home Wi-Fi Dodge</h1>
     <p class="tip">Open this server from another device on your Wi-Fi with your computer's local IP address.</p>
+
     {% if error %}
     <p class="error">{{ error }}</p>
     {% endif %}
@@ -18,7 +19,11 @@
       <h2>Welcome, {{ profile.username }}</h2>
       <p>Coins: {{ profile.coins }}</p>
       <p>Wins: {{ profile.wins }}</p>
-      <a class="button" href="/lobby">Join Match</a>
+
+      <div style="display:flex; gap:1rem; margin-top:1rem;">
+        <a class="button" href="/lobby">Join Match</a>
+        <a class="button danger" href="/logout">Log Out</a>
+      </div>
     </section>
     {% else %}
     <section class="grid">
@@ -28,6 +33,7 @@
         <input name="password" placeholder="Password" type="password" required>
         <button type="submit">Create Account</button>
       </form>
+
       <form class="card" method="post" action="/login">
         <h2>Log In</h2>
         <input name="username" placeholder="Username" required>
@@ -37,16 +43,21 @@
     </section>
     {% endif %}
 
-    <section class="card">
-      <h2>Leaderboard</h2>
-      <ol>
-        {% for player in leaderboard %}
+<section class="card">
+  <h2>Leaderboard</h2>
+  <ol>
+    {% if leaderboard %}
+      {% for player in leaderboard %}
         <li>{{ player.username }} - {{ player.wins }} wins - {{ player.coins }} coins</li>
-        {% else %}
-        <li>No players yet.</li>
-        {% endfor %}
-      </ol>
+      {% endfor %}
+    {% else %}
+      <li>No players yet.</li>
+    {% endif %}
+  </ol>
+</section>
+
     </section>
   </main>
 </body>
 </html>
+
