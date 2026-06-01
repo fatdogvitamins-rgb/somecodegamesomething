@@ -46,14 +46,16 @@
 <section class="card">
   <h2>Leaderboard</h2>
   <ol>
-    {% if leaderboard %}
-      {% for player in leaderboard %}
+    {%- if leaderboard %}
+      {%- for player in leaderboard %}
         <li>{{ player.username }} - {{ player.wins }} wins - {{ player.coins }} coins</li>
-      {% endfor %}
-    {% else %}
+      {%- endfor %}
+    {%- else %}
       <li>No players yet.</li>
-    {% endif %}
+    {%- endif %}
   </ol>
+</section>
+
 </section>
 
     </section>
